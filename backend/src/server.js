@@ -14,7 +14,7 @@ const connectDB   = require('./config/db');
 const authRoutes  = require('./routes/auth');
 const apiRoutes   = require('./routes/api');
 const casesRoutes = require('./routes/cases.routes');
-
+const adminMetricsRoutes = require('./routes/admin.metrics.routes');
 const app = express();
 
 // Connect DB
@@ -80,6 +80,7 @@ const adminRoutes = require('./routes/admin.routes');
 app.use('/api/admin', adminRoutes); 
 const adminCasesRoutes = require('./routes/admin.cases');
 app.use('/api/admin', adminCasesRoutes);
+app.use('/api/admin', adminMetricsRoutes);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`JusticeConnect running at http://localhost:${port}`));
