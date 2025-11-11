@@ -5,242 +5,402 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JusticeConnect | Case Details</title>
   <link rel="shortcut icon" type="image/png" href="./assets/images/logos/favicon.png" />
-  <link rel="stylesheet" href="./assets/libs/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Match admin bundle -->
   <link rel="stylesheet" href="./css/styles.min.css" />
+  <!-- Page-specific styles (optional) -->
   <link rel="stylesheet" href="./css/case-details.css" />
 </head>
-<body class="bg-light">
 
-  <!-- Top bar -->
-  <nav class="navbar navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="admin.html">
-        <img src="assets/images/logos/logo.svg" alt="" height="24" class="me-2" />
-        <span class="fw-semibold">JusticeConnect Admin</span>
-      </a>
-      <div class="d-flex gap-2">
-        <a id="backLink" href="admin.html" class="btn btn-outline-secondary btn-sm">← Back to Queue</a>
+<body>
+  <!-- ===== Body Wrapper ===== -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
+       data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Topstrip -->
+    <div class="app-topstrip bg-dark py-6 px-3 w-100 d-lg-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-center gap-3 mb-2 mb-lg-0">
+        <a class="d-flex justify-content-center align-items-center text-white text-decoration-none" href="./admin.html">
+          <img src="assets/images/logos/logo-wrappixel.svg" alt="" width="48" style="filter:brightness(0) invert(1);" />
+          <div class="ms-2">
+            <div class="fw-bold text-white" style="line-height:1;">JusticeConnect</div>
+            <div class="text-white-50 small">Legal Aid Management</div>
+          </div>
+        </a>
+      </div>
+      <div class="text-white small text-center text-lg-end">
+        <span class="d-block fw-semibold">Admin Control Panel</span>
+        <span class="text-white-50">Confidential / Internal Use Only</span>
       </div>
     </div>
-  </nav>
 
-  <main class="container my-4">
-    <!-- Header -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+    <!-- Sidebar (same as admin) -->
+    <aside class="left-sidebar">
       <div>
-        <h3 class="mb-0">Case Details</h3>
-        <div class="text-muted" id="cd-caseId">Case: —</div>
-      </div>
-      <div class="d-flex align-items-center gap-2">
-        <span id="priorityPill" class="badge badge-soft"></span>
-        <span id="statusPill" class="badge badge-soft"></span>
-      </div>
-    </div>
-
-    <div class="row g-4">
-      <!-- LEFT: All case/request details -->
-      <div class="col-lg-8">
-        <!-- Case summary -->
-        <div class="card shadow-sm border-0 mb-4">
-          <div class="card-body">
-            <h5 class="card-title mb-3">Summary</h5>
-
-            <div class="row g-3">
-              <div class="col-md-6">
-                <div class="key">Survivor (preferred name)</div>
-                <div class="value" id="cd-name">—</div>
-                <div class="text-muted small" id="cd-location">—</div>
-              </div>
-              <div class="col-md-3">
-                <div class="key">Issue category</div>
-                <div class="value" id="cd-category">—</div>
-              </div>
-              <div class="col-md-3">
-                <div class="key">Submitted</div>
-                <div class="value" id="cd-created">—</div>
-              </div>
-            </div>
-
-            <hr class="my-4" />
-
-            <div>
-              <div class="key mb-1">Case description</div>
-              <p id="cd-desc" class="mb-0">—</p>
-            </div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./admin.html" class="text-nowrap logo-img d-flex align-items-center">
+            <img src="assets/images/logos/logo.svg" alt="" />
+            <span class="ms-2 fw-semibold">JusticeConnect</span>
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-6"></i>
           </div>
         </div>
 
-        <!-- Detailed request (all fields from submit form) -->
-        <div class="card shadow-sm border-0 mb-4">
-          <div class="card-body">
-            <h5 class="card-title mb-3">Request Details</h5>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">ADMIN HOME</span>
+            </li>
 
-            <!-- Contact -->
-            <div class="mb-3">
-              <div class="heading-xs mb-2">Contact</div>
-              <div class="dl-grid">
-                <div class="key">Preferred contact method</div>
-                <div id="rd-contactMethod" class="value">—</div>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./admin.html" aria-expanded="false">
+                <i class="ti ti-atom"></i>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
 
-                <div class="key">Contact (email/phone)</div>
-                <div id="rd-contactValue" class="value">—</div>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./admin.html#case-queue" aria-expanded="false">
+                <i class="ti ti-clipboard-list"></i>
+                <span class="hide-menu">Case Queue</span>
+              </a>
+            </li>
 
-                <div class="key">Safe to contact?</div>
-                <div id="rd-safe" class="value">—</div>
-              </div>
-            </div>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./admin.html#assign-case" aria-expanded="false">
+                <i class="ti ti-user-check"></i>
+                <span class="hide-menu">Assign Case</span>
+              </a>
+            </li>
 
-            <hr />
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./admin.html#lawyer-directory" aria-expanded="false">
+                <i class="ti ti-users"></i>
+                <span class="hide-menu">Lawyer Directory</span>
+              </a>
+            </li>
 
-            <!-- Location & language -->
-            <div class="mb-3">
-              <div class="heading-xs mb-2">Location & Language</div>
-              <div class="dl-grid">
-                <div class="key">Province/Territory</div>
-                <div id="rd-province" class="value">—</div>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./admin.html#lawyer-availability" aria-expanded="false">
+                <i class="ti ti-user-check"></i>
+                <span class="hide-menu">Lawyer Availability</span>
+              </a>
+            </li>
 
-                <div class="key">City/Town</div>
-                <div id="rd-city" class="value">—</div>
+            <li><span class="sidebar-divider lg"></span></li>
 
-                <div class="key">Preferred language</div>
-                <div id="rd-language" class="value">—</div>
-              </div>
-            </div>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">ACCOUNT</span>
+            </li>
 
-            <hr />
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./profile.html" aria-expanded="false">
+                <i class="ti ti-user"></i>
+                <span class="hide-menu">Profile</span>
+              </a>
+            </li>
 
-            <!-- Issue -->
-            <div class="mb-3">
-              <div class="heading-xs mb-2">Issue</div>
-              <div class="dl-grid">
-                <div class="key">Issue category</div>
-                <div id="rd-issueCategory" class="value">—</div>
-
-                <div class="key">Desired outcome</div>
-                <div id="rd-desiredOutcome" class="value">—</div>
-
-                <div class="key">Brief situation</div>
-                <div id="rd-situation">—</div>
-              </div>
-            </div>
-
-            <hr />
-
-            <!-- Urgency & safety -->
-            <div class="mb-3">
-              <div class="heading-xs mb-2">Urgency & Safety</div>
-              <div class="dl-grid">
-                <div class="key">Urgency</div>
-                <div id="rd-urgency" class="value">—</div>
-
-                <div class="key">Immediate safety concerns?</div>
-                <div id="rd-safetyConcern" class="value">—</div>
-              </div>
-            </div>
-
-            <hr />
-
-            <!-- Preferences -->
-            <div class="mb-3">
-              <div class="heading-xs mb-2">Preferences</div>
-              <div class="dl-grid">
-                <div class="key">Best time to contact</div>
-                <div id="rd-contactTimes" class="value">—</div>
-
-                <div class="key">Accessibility / support needs</div>
-                <div id="rd-accessNeeds">—</div>
-
-                <div class="key">Confidential notes for staff</div>
-                <div id="rd-confidentialNotes">—</div>
-              </div>
-            </div>
-
-            <hr />
-
-            <!-- Attachments -->
-            <div class="mb-1">
-              <div class="heading-xs mb-2">Attachments</div>
-              <ul id="rd-attachments" class="list-unstyled mb-0 small text-muted">
-                <li>—</li>
-              </ul>
-              <div class="text-muted small mt-1">Note: attachments are stored securely; only authorized staff can access.</div>
-            </div>
-          </div>
-        </div>
+            <li class="sidebar-item">
+              <a class="sidebar-link" id="btnLogout" href="#" aria-expanded="false">
+                <i class="ti ti-logout"></i>
+                <span class="hide-menu">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
+    </aside>
 
-      <!-- RIGHT: Assign to lawyer -->
-      <div class="col-lg-4">
-        <div class="card shadow-sm border-0">
-          <div class="card-body">
-            <h5 class="card-title mb-3">Assign to Lawyer</h5>
+    <!-- Main wrapper -->
+    <div class="body-wrapper">
+      <!-- Header (same as admin) -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler" id="headerCollapse" href="#">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
 
-            <div id="assignSuccess" class="alert alert-success d-none" role="alert">
-              Assignment saved. Redirecting to queue…
-            </div>
-            <div id="assignError" class="alert alert-danger d-none" role="alert">
-              Unable to save assignment. Please try again.
-            </div>
-
-            <form id="assignForm" novalidate>
-              <div class="mb-3">
-                <label class="form-label">Case</label>
-                <input type="text" id="as-selected" class="form-control" disabled />
-              </div>
-
-              <div class="mb-3">
-                <label for="as-lawyer" class="form-label">Lawyer</label>
-                <select class="form-select" id="as-lawyer" required>
-                  <option value="" selected disabled>Choose a lawyer…</option>
-                  <option value="A. Patel (Family Law)">A. Patel (Family Law)</option>
-                  <option value="R. Chen (Housing)">R. Chen (Housing)</option>
-                  <option value="K. Singh (Employment)">K. Singh (Employment)</option>
-                </select>
-                <div class="invalid-feedback">Please choose a lawyer.</div>
-              </div>
-
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="as-priority" class="form-label">Priority</label>
-                  <select id="as-priority" class="form-select" required>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option selected>High</option>
-                  </select>
-                  <div class="invalid-feedback">Please set priority.</div>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="ti ti-bell"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">
+                <div class="message-body">
+                  <a href="#" class="dropdown-item">New high-priority request submitted</a>
+                  <a href="#" class="dropdown-item">Lawyer availability updated</a>
                 </div>
-                <div class="col-md-6">
-                  <label for="as-status" class="form-label">Status</label>
-                  <select id="as-status" class="form-select" required>
-                    <option>Submitted</option>
-                    <option selected>In Review</option>
-                    <option>Assigned</option>
-                  </select>
-                  <div class="invalid-feedback">Please set status.</div>
+              </div>
+            </li>
+          </ul>
+
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="./profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <div class="px-3 pb-2 small text-muted">Signed in as</div>
+                    <div class="px-3 pb-2 fw-semibold">System Admin</div>
+
+                    <a href="./profile.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="#" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-lock fs-6"></i>
+                      <p class="mb-0 fs-3">Access Control</p>
+                    </a>
+                    <a href="#" id="btnLogoutTop" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <!-- ===== Page content (Case Details) ===== -->
+      <div class="body-wrapper-inner">
+        <div class="container-fluid">
+
+          <!-- Top action row with Back to Queue -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+            <a id="backLink" href="admin.html" class="btn btn-outline-secondary btn-sm">← Back to Queue</a>
+          </div>
+
+          <div class="row g-4">
+            <!-- LEFT: All case/request details -->
+            <div class="col-lg-8">
+              <!-- Case summary -->
+              <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap align-items-center justify-content-between mb-2">
+                    <h5 class="card-title mb-0">Case Details</h5>
+                    <div class="d-flex align-items-center gap-2">
+                      <span id="priorityPill" class="badge badge-soft"></span>
+                      <span id="statusPill" class="badge badge-soft"></span>
+                    </div>
+                  </div>
+                  <div class="text-muted mb-3" id="cd-caseId">Case: —</div>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="key">Survivor (preferred name)</div>
+                      <div class="value" id="cd-name">—</div>
+                      <div class="text-muted small" id="cd-location">—</div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="key">Issue category</div>
+                      <div class="value" id="cd-category">—</div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="key">Submitted</div>
+                      <div class="value" id="cd-created">—</div>
+                    </div>
+                  </div>
+
+                  <hr class="my-4" />
+
+                  <div>
+                    <div class="key mb-1">Case description</div>
+                    <p id="cd-desc" class="mb-0">—</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="mt-3">
-                <label for="as-notes" class="form-label">Internal notes (optional)</label>
-                <textarea id="as-notes" class="form-control" rows="3" placeholder="Anything the lawyer should know."></textarea>
-              </div>
+              <!-- Detailed request (all fields from submit form) -->
+              <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">Request Details</h5>
 
-              <div class="d-grid mt-4">
-                <button class="btn btn-primary" type="submit">
-                  Confirm Assignment
-                </button>
-              </div>
-            </form>
+                  <!-- Contact -->
+                  <div class="mb-3">
+                    <div class="heading-xs mb-2">Contact</div>
+                    <div class="dl-grid">
+                      <div class="key">Preferred contact method</div>
+                      <div id="rd-contactMethod" class="value">—</div>
 
-            <hr class="my-4" />
-            <a id="backLink2" href="admin.html" class="btn btn-outline-secondary w-100">← Back to Queue</a>
+                      <div class="key">Contact (email/phone)</div>
+                      <div id="rd-contactValue" class="value">—</div>
+
+                      <div class="key">Safe to contact?</div>
+                      <div id="rd-safe" class="value">—</div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Location & language -->
+                  <div class="mb-3">
+                    <div class="heading-xs mb-2">Location & Language</div>
+                    <div class="dl-grid">
+                      <div class="key">Province/Territory</div>
+                      <div id="rd-province" class="value">—</div>
+
+                      <div class="key">City/Town</div>
+                      <div id="rd-city" class="value">—</div>
+
+                      <div class="key">Preferred language</div>
+                      <div id="rd-language" class="value">—</div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Issue -->
+                  <div class="mb-3">
+                    <div class="heading-xs mb-2">Issue</div>
+                    <div class="dl-grid">
+                      <div class="key">Issue category</div>
+                      <div id="rd-issueCategory" class="value">—</div>
+
+                      <div class="key">Desired outcome</div>
+                      <div id="rd-desiredOutcome" class="value">—</div>
+
+                      <div class="key">Brief situation</div>
+                      <div id="rd-situation">—</div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Urgency & safety -->
+                  <div class="mb-3">
+                    <div class="heading-xs mb-2">Urgency & Safety</div>
+                    <div class="dl-grid">
+                      <div class="key">Urgency</div>
+                      <div id="rd-urgency" class="value">—</div>
+
+                      <div class="key">Immediate safety concerns?</div>
+                      <div id="rd-safetyConcern" class="value">—</div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Preferences -->
+                  <div class="mb-3">
+                    <div class="heading-xs mb-2">Preferences</div>
+                    <div class="dl-grid">
+                      <div class="key">Best time to contact</div>
+                      <div id="rd-contactTimes" class="value">—</div>
+
+                      <div class="key">Accessibility / support needs</div>
+                      <div id="rd-accessNeeds">—</div>
+
+                      <div class="key">Confidential notes for staff</div>
+                      <div id="rd-confidentialNotes">—</div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Attachments -->
+                  <div class="mb-1">
+                    <div class="heading-xs mb-2">Attachments</div>
+                    <ul id="rd-attachments" class="list-unstyled mb-0 small text-muted">
+                      <li>—</li>
+                    </ul>
+                    <div class="text-muted small mt-1">
+                      Note: attachments are stored securely; only authorized staff can access.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Assign to lawyer -->
+            <div class="col-lg-4">
+              <div class="card shadow-sm border-0">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">Assign to Lawyer</h5>
+
+                  <div id="assignSuccess" class="alert alert-success d-none" role="alert">
+                    Assignment saved. Redirecting to queue…
+                  </div>
+                  <div id="assignError" class="alert alert-danger d-none" role="alert">
+                    Unable to save assignment. Please try again.
+                  </div>
+
+                  <form id="assignForm" novalidate>
+                    <div class="mb-3">
+                      <label class="form-label">Case</label>
+                      <input type="text" id="as-selected" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="as-lawyer" class="form-label">Lawyer</label>
+                      <select class="form-select" id="as-lawyer" required>
+                        <option value="" selected disabled>Choose a lawyer…</option>
+                        <option value="A. Patel (Family Law)">A. Patel (Family Law)</option>
+                        <option value="R. Chen (Housing)">R. Chen (Housing)</option>
+                        <option value="K. Singh (Employment)">K. Singh (Employment)</option>
+                      </select>
+                      <div class="invalid-feedback">Please choose a lawyer.</div>
+                    </div>
+
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="as-priority" class="form-label">Priority</label>
+                        <select id="as-priority" class="form-select" required>
+                          <option>Low</option>
+                          <option>Medium</option>
+                          <option selected>High</option>
+                        </select>
+                        <div class="invalid-feedback">Please set priority.</div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="as-status" class="form-label">Status</label>
+                        <select id="as-status" class="form-select" required>
+                          <option>Submitted</option>
+                          <option selected>In Review</option>
+                          <option>Assigned</option>
+                        </select>
+                        <div class="invalid-feedback">Please set status.</div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <label for="as-notes" class="form-label">Internal notes (optional)</label>
+                      <textarea id="as-notes" class="form-control" rows="3" placeholder="Anything the lawyer should know."></textarea>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                      <button class="btn btn-primary" type="submit">Confirm Assignment</button>
+                    </div>
+                  </form>
+
+                  <hr class="my-4" />
+                  <a id="backLink2" href="admin.html" class="btn btn-outline-secondary w-100">← Back to Queue</a>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="py-6 px-6 text-center">
+            <p class="mb-0 fs-4">JusticeConnect • Secure Legal Aid Platform</p>
+          </div>
+
         </div>
       </div>
+      <!-- /Page content -->
     </div>
-  </main>
+    <!-- /Main wrapper -->
+  </div>
 
-  <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scripts (match admin) -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <!-- Page logic -->
   <script src="./js/case-details.js" defer></script>
 </body>
 </html>

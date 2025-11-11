@@ -15812,6 +15812,13 @@ textarea.form-control-lg {
   z-index: 12;
 }
 
+label:has(+ textarea[required])::after,
+label:has(+ input[required])::after,
+label:has(+ select[required])::after,
+label:has(+ textarea[required])::after {
+  content: " *";
+  color: #dc3545;
+}
 .app-header {
   position: relative;
   z-index: 50;
@@ -15820,6 +15827,10 @@ textarea.form-control-lg {
   padding: 0 10px;
   top: 65px;
 }
+:root { --header-h: 72px; } /* adjust if your header is taller */
+  html { scroll-behavior: smooth; }
+  /* Any in-page anchor target should get this class to avoid being hidden under the fixed header */
+.anchor-target { scroll-margin-top: calc(var(--header-h) + 50px); }
 @media (max-width: 991.98px) {
   .app-header {
     top: 131px;

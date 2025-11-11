@@ -78,19 +78,18 @@
                 <span class="hide-menu">Submit New Request</span>
               </a>
             </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#profile" aria-expanded="false">
-                <i class="ti ti-user"></i>
-                <span class="hide-menu">Profile</span>
-              </a>
-            </li>
-
             <li><span class="sidebar-divider lg"></span></li>
 
             <li class="nav-small-cap">
               <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
               <span class="hide-menu">ACCOUNT</span>
+            </li>
+            
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./profile.html" aria-expanded="false">
+                <i class="ti ti-user"></i>
+                <span class="hide-menu">Profile</span>
+              </a>
             </li>
 
             <li class="sidebar-item">
@@ -129,7 +128,7 @@
               </div>
             </li>
           </ul>
-
+<!-- 
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item dropdown">
@@ -151,7 +150,7 @@
                 </div>
               </li>
             </ul>
-          </div>
+          </div> -->
         </nav>
       </header>
       <!--  Header End -->
@@ -160,7 +159,7 @@
         <div class="container-fluid">
           <div class="row">
             <!-- LEFT MAIN CARD: My Case Status -->
-            <div class="col-lg-8">
+            <div class="col-lg-8 anchor-target" id="my-case">
                             <!-- ===================== Case Summary Table ===================== -->
               <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
@@ -277,7 +276,7 @@
             </div>
 
             <!-- ===== NEW CASE REQUEST (with upload) ===== -->
-            <div class="col-12" id="new-case">
+            <div class="col-12 anchor-target" id="new-case">
               <div class="card">
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
@@ -512,7 +511,7 @@
             </div>
 
             <!-- My Legal Support -->
-            <div class="col-lg-6" id="my-case">
+            <div class="col-lg-6">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title mb-0">My Legal Support</h4>
@@ -572,8 +571,6 @@
   <script src="./assets/js/app.min.js"></script>
   <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="./assets/libs/simplebar/dist/simplebar.js"></script>
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/survivor.js"></script>
   <script src="js/survivor-cases.js"></script>

@@ -63,7 +63,7 @@
 
             <!-- My Assigned Cases -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#my-cases" aria-expanded="false">
                 <i class="ti ti-briefcase"></i>
                 <span class="hide-menu">My Cases</span>
               </a>
@@ -71,7 +71,7 @@
 
             <!-- Client Queue -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#client-queue" aria-expanded="false">
                 <i class="ti ti-users"></i>
                 <span class="hide-menu">Client Queue</span>
               </a>
@@ -79,27 +79,12 @@
 
             <!-- Availability / Status -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#my-availability" aria-expanded="false">
                 <i class="ti ti-user-check"></i>
                 <span class="hide-menu">My Availability</span>
               </a>
             </li>
 
-            <!-- Resources -->
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
-                <i class="ti ti-book"></i>
-                <span class="hide-menu">Guides & Resources</span>
-              </a>
-            </li>
-
-            <!-- Profile -->
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
-                <i class="ti ti-user"></i>
-                <span class="hide-menu">Profile & Settings</span>
-              </a>
-            </li>
 
             <li>
               <span class="sidebar-divider lg"></span>
@@ -108,6 +93,15 @@
             <li class="nav-small-cap">
               <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
               <span class="hide-menu">ACCOUNT</span>
+            </li>
+
+
+            <!-- Profile -->
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./profile.html" aria-expanded="false">
+                <i class="ti ti-user"></i>
+                <span class="hide-menu">Profile</span>
+              </a>
             </li>
 
             <!-- Logout -->
@@ -155,10 +149,9 @@
             </li>
           </ul>
 
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <!-- <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
 
-              <!-- profile menu -->
               <li class="nav-item dropdown">
                 <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -183,7 +176,7 @@
               </li>
 
             </ul>
-          </div>
+          </div> -->
         </nav>
       </header>
       <!--  Header End -->
@@ -195,7 +188,7 @@
 
             <!-- LEFT MAIN CARD: Active Case Load -->
             <div class="col-lg-8">
-              <div class="card w-100">
+              <div class="card w-100 anchor-target" id="my-cases">
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
                     <div>
@@ -316,7 +309,7 @@
             </div>
 
             <!-- TABLE: Client Queue -->
-            <div class="col-12">
+            <div class="col-12 anchor-target" id="client-queue">
               <div class="card">
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
@@ -449,7 +442,7 @@
             </div>
 
             <!-- LOWER ROW LEFT: My Availability / Status -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 anchor-target" id="my-availability">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title mb-0">My Availability</h4>
@@ -586,12 +579,12 @@
   </div>
 
   <!-- scripts -->
-  <!-- <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/js/sidebarmenu.js"></script>
   <script src="./assets/js/app.min.js"></script>
   <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="./assets/libs/simplebar/dist/simplebar.js"></script> -->
+  <script src="./assets/libs/simplebar/dist/simplebar.js"></script>
 
   <!-- You can reuse dashboard.js; rename data series labels to "New / Unreviewed" and "In Progress" -->
   <script src="./assets/js/dashboard.js"></script>

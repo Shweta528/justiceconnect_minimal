@@ -63,7 +63,7 @@
 
             <!-- Case Queue -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#case-queue" aria-expanded="false">
                 <i class="ti ti-clipboard-list"></i>
                 <span class="hide-menu">Case Queue</span>
               </a>
@@ -71,25 +71,17 @@
 
             <!-- Assign Lawyers -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#assign-case" aria-expanded="false">
                 <i class="ti ti-user-check"></i>
-                <span class="hide-menu">Assign Lawyer</span>
+                <span class="hide-menu">Assign Case</span>
               </a>
             </li>
 
             <!-- Directory -->
             <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
+              <a class="sidebar-link" href="#lawyer-directory" aria-expanded="false">
                 <i class="ti ti-users"></i>
                 <span class="hide-menu">Lawyer Directory</span>
-              </a>
-            </li>
-
-            <!-- Survivor Requests -->
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
-                <i class="ti ti-user-heart"></i>
-                <span class="hide-menu">Survivor Requests</span>
               </a>
             </li>
 
@@ -110,6 +102,12 @@
               <span class="hide-menu">ACCOUNT</span>
             </li>
 
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./profile.html" aria-expanded="false">
+                <i class="ti ti-user"></i>
+                <span class="hide-menu">Profile</span>
+              </a>
+            </li>
             <!-- Logout (sidebar) -->
             <li class="sidebar-item">
               <a class="sidebar-link" id="btnLogout" href="#" aria-expanded="false">
@@ -155,10 +153,9 @@
             </li>
           </ul>
 
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <!-- <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
 
-              <!-- profile menu -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="./profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
@@ -182,7 +179,7 @@
               </li>
 
             </ul>
-          </div>
+          </div> -->
         </nav>
       </header>
       <!--  Header End -->
@@ -193,7 +190,7 @@
           <div class="row">
             <!-- LEFT MAIN CARD: Case Overview -->
             <div class="col-lg-8">
-              <div class="card w-100">
+              <div class="card w-100 anchor-target" id="case-queue">
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
                     <div>
@@ -295,7 +292,7 @@
             </div>
 
             <!-- TABLE: Assignment Queue -->
-            <div class="col-12">
+            <div class="col-12 anchor-target" id="assign-case">
               <div class="card">
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
@@ -338,9 +335,119 @@
                 </div>
               </div>
             </div>
+            <!--Lawyer directory-->
+          <div class="card shadow-sm border-0 anchor-target" id="lawyer-directory">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-semibold text-dark">Lawyer Directory</h5>
+                <span class="badge bg-secondary-subtle text-secondary">Confidential • Internal Use</span>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light border-bottom">
+                    <tr class="text-uppercase small text-muted">
+                      <th style="width:15%">Name</th>
+                      <th style="width:15%">Specialization</th>
+                      <th style="width:10%">License (Province)</th>
+                      <th style="width:12%">License No.</th>
+                      <th style="width:8%">Experience</th>
+                      <th style="width:10%">Availability</th>
+                      <th style="width:14%">Contact</th>
+                      <th style="width:8%">Status</th>
+                      <th style="width:8%">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <!-- Lawyer 1 -->
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="./profile/user-1.jpg" alt="lawyer" class="rounded-circle me-2" width="40" height="40">
+                          <div>
+                            <div class="fw-semibold text-dark">A. Patel</div>
+                            <small class="text-muted">Family Law</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Family & Protection Law</td>
+                      <td>Ontario</td>
+                      <td><span class="fw-semibold">ON-2023-4521</span></td>
+                      <td>8 yrs</td>
+                      <td><span class="badge bg-success-subtle text-success">Available</span></td>
+                      <td>
+                        <a href="mailto:apatel@justiceconnect.ca" class="text-decoration-none">apatel@justiceconnect.ca</a><br>
+                        <small class="text-muted">+1 416-555-2345</small>
+                      </td>
+                      <td><span class="badge bg-success">Active</span></td>
+                      <td>
+                        <a href="./lawyer-profile.html?id=1" class="btn btn-outline-primary btn-sm">View / Assign</a>
+                      </td>
+                    </tr>
+
+                    <!-- Lawyer 2 -->
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="./profile/user-2.jpg" alt="lawyer" class="rounded-circle me-2" width="40" height="40">
+                          <div>
+                            <div class="fw-semibold text-dark">J. Chen</div>
+                            <small class="text-muted">Immigration Law</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Immigration & Settlement</td>
+                      <td>British Columbia</td>
+                      <td><span class="fw-semibold">BC-2019-3098</span></td>
+                      <td>5 yrs</td>
+                      <td><span class="badge bg-warning-subtle text-warning">Busy</span></td>
+                      <td>
+                        <a href="mailto:jchen@justiceconnect.ca" class="text-decoration-none">jchen@justiceconnect.ca</a><br>
+                        <small class="text-muted">+1 604-555-6789</small>
+                      </td>
+                      <td><span class="badge bg-primary">Active</span></td>
+                      <td>
+                        <a href="./lawyer-profile.html?id=2" class="btn btn-outline-primary btn-sm">View / Assign</a>
+                      </td>
+                    </tr>
+
+                    <!-- Lawyer 3 -->
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="./profile/user-4.jpg" alt="lawyer" class="rounded-circle me-2" width="40" height="40">
+                          <div>
+                            <div class="fw-semibold text-dark">M. Singh</div>
+                            <small class="text-muted">Housing Rights</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>Housing & Tenant Disputes</td>
+                      <td>Alberta</td>
+                      <td><span class="fw-semibold">AB-2015-1277</span></td>
+                      <td>10 yrs</td>
+                      <td><span class="badge bg-success-subtle text-success">Available</span></td>
+                      <td>
+                        <a href="mailto:msingh@justiceconnect.ca" class="text-decoration-none">msingh@justiceconnect.ca</a><br>
+                        <small class="text-muted">+1 780-555-9012</small>
+                      </td>
+                      <td><span class="badge bg-secondary">On Leave</span></td>
+                      <td>
+                        <a href="./lawyer-profile.html?id=3" class="btn btn-outline-primary btn-sm">View / Assign</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-footer bg-light small text-muted">
+                <i class="ti ti-info-circle me-1"></i>List of registered lawyers verified by JusticeConnect admin.
+              </div>
+            </div>
+
 
             <!-- LOWER ROW -->
-            <div class="col-lg-6" id="lawyer-availability">
+            <div class="col-lg-6 anchor-target" id="lawyer-availability">
               <!-- Card: Lawyer Availability -->
               <div class="card">
                 <div class="card-body">

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>JusticeConnect | Profile</title>
+  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/favicon.png"/>
+  <link rel="stylesheet" href="./css/styles.min.css"/>
+  <style>
+    .required-asterisk::after { content: " *"; color:#dc3545; font-weight:600; margin-left:.125rem; }
+    .round-64 { width:64px; height:64px; }
+  </style>
+</head>
+<body>
+  <!-- Layout wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+       data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Top strip -->
+    <div class="app-topstrip bg-dark py-6 px-3 w-100 d-lg-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-center gap-3 mb-2 mb-lg-0">
+        <a class="d-flex justify-content-center align-items-center text-white text-decoration-none" href="./survivor.html">
+          <img src="assets/images/logos/logo-wrappixel.svg" alt="" width="48" style="filter:brightness(0) invert(1);">
+          <div class="ms-2">
+            <div class="fw-bold text-white" style="line-height:1;">JusticeConnect</div>
+            <div class="text-white-50 small">Support & Legal Aid</div>
+          </div>
+        </a>
+      </div>
+      <div class="text-white small text-center text-lg-end">
+        <span class="d-block fw-semibold">My Support Dashboard</span>
+        <span class="text-white-50">Your information is private</span>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./survivor.html" class="text-nowrap logo-img d-flex align-items-center">
+            <img src="assets/images/logos/logo.svg" alt=""/>
+            <span class="ms-2 fw-semibold">JusticeConnect</span>
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-6"></i>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+              <span class="hide-menu">MENU</span>
+            </li>
+
+           
+            
+
+            <li><span class="sidebar-divider lg"></span></li>
+
+            <li class="nav-small-cap">
+              <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+              <span class="hide-menu">ACCOUNT</span>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link active" href="./profile.html">
+                <i class="ti ti-user"></i><span class="hide-menu">Profile</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html">
+                <i class="ti ti-logout"></i><span class="hide-menu">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- /Sidebar -->
+
+    <!-- Main -->
+    <div class="body-wrapper">
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+          </ul>
+          <!-- <div class="navbar-collapse justify-content-end px-0">
+            <ul class="navbar-nav flex-row ms-auto align-items-center">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0)" id="profileMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="./profile/user-3.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="profileMenu">
+                  <div class="message-body">
+                    <a href="./profile.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i><p class="mb-0 fs-3">Profile & Contact</p>
+                    </a>
+                    <a href="./survivor.html#privacy" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-shield-lock fs-6"></i><p class="mb-0 fs-3">Privacy & Safety</p>
+                    </a>
+                    <a href="./index.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div> -->
+        </nav>
+      </header>
+
+      <div class="body-wrapper-inner">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card shadow-sm border-0">
+                <div class="card-header bg-light d-flex align-items-center justify-content-between">
+                  <div>
+                    <h5 class="mb-0 fw-semibold text-dark">My Profile</h5>
+                    <small class="text-muted">Update your contact and preference details. Fields with <span class="text-danger">*</span> are required.</small>
+                  </div>
+                  <span class="badge bg-secondary-subtle text-secondary">Private</span>
+                </div>
+
+                <div class="card-body">
+                  <!-- alerts -->
+                  <div id="profileSaved" class="alert alert-success d-none" role="alert">
+                    ✅ Profile saved.
+                  </div>
+                  <div id="profileError" class="alert alert-danger d-none" role="alert">
+                    ⚠️ Couldn’t save profile. Please try again.
+                  </div>
+
+                  <form id="profileForm" class="needs-validation" novalidate>
+                    <div class="row g-4">
+                      <!-- Avatar (optional) -->
+                      <div class="col-12 d-flex align-items-center gap-3">
+                        <img id="avatarPreview" src="./profile/user-3.jpg" alt="avatar" class="rounded-circle round-64 border">
+                        <div>
+                          <div class="fw-semibold">Your photo (optional)</div>
+                          <input type="file" id="avatar" class="form-control form-control-sm mt-2" accept="image/*" aria-describedby="avatarHelp">
+                          <small id="avatarHelp" class="text-muted">PNG/JPG up to 2MB. (Optional)</small>
+                        </div>
+                      </div>
+
+                      <hr class="mt-1"/>
+
+                      <div class="col-md-6">
+                        <label for="preferredName" class="form-label required-asterisk">Preferred name</label>
+                        <input type="text" id="preferredName" name="preferredName" class="form-control" required>
+                        <div class="invalid-feedback">Please enter a preferred name.</div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="legalName" class="form-label">Legal name (optional)</label>
+                        <input type="text" id="legalName" name="legalName" class="form-control">
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="contactMethod" class="form-label required-asterisk">Preferred contact method</label>
+                        <select id="contactMethod" name="contactMethod" class="form-select" required>
+                          <option value="" disabled selected>Choose…</option>
+                          <option value="email">Email</option>
+                          <option value="phone">Phone</option>
+                          <option value="sms">SMS/Text</option>
+                          <option value="in-app">In-app only</option>
+                        </select>
+                        <div class="invalid-feedback">Please choose how we should reach you.</div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com">
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1 555 555 5555">
+                      </div>
+
+                      <div class="col-md-6 d-flex align-items-center mt-4">
+                        <input class="form-check-input me-2" type="checkbox" id="safeToContact" name="safeToContact" checked>
+                        <label class="form-check-label" for="safeToContact">It’s safe to contact me at this info</label>
+                      </div>
+
+                      <hr class="mt-2"/>
+
+                      <div class="col-md-4">
+                        <label for="province" class="form-label required-asterisk">Province/Territory</label>
+                        <select id="province" name="province" class="form-select" required>
+                          <option value="" disabled selected>Choose…</option>
+                          <option>Ontario</option><option>Alberta</option><option>British Columbia</option>
+                          <option>Manitoba</option><option>New Brunswick</option><option>Newfoundland and Labrador</option>
+                          <option>Nova Scotia</option><option>Prince Edward Island</option><option>Quebec</option>
+                          <option>Saskatchewan</option><option>Northwest Territories</option><option>Nunavut</option><option>Yukon</option>
+                        </select>
+                        <div class="invalid-feedback">Please choose your province/territory.</div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <label for="city" class="form-label">City/Town</label>
+                        <input type="text" id="city" name="city" class="form-control" placeholder="Optional">
+                      </div>
+
+                      <div class="col-md-4">
+                        <label for="language" class="form-label">Preferred language</label>
+                        <select id="language" name="language" class="form-select">
+                          <option value="English" selected>English</option>
+                          <option>French</option><option>Arabic</option><option>Hindi</option><option>Mandarin</option>
+                          <option>Punjabi</option><option>Spanish</option><option>Urdu</option><option>Other</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="contactTimes" class="form-label">Best time to contact you</label>
+                        <select id="contactTimes" name="contactTimes" class="form-select">
+                          <option value="" selected>Anytime</option>
+                          <option>Mornings</option><option>Afternoons</option><option>Evenings</option><option>Weekends</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="accessNeeds" class="form-label">Accessibility or support needs</label>
+                        <input type="text" id="accessNeeds" name="accessNeeds" class="form-control" placeholder="Interpreter, assistive tech, etc.">
+                      </div>
+
+                      <div class="col-12">
+                        <label for="notes" class="form-label">Notes for staff (optional)</label>
+                        <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Share only what’s safe to share."></textarea>
+                      </div>
+                    </div>
+
+                    <hr class="my-4"/>
+
+                    <div class="d-flex gap-2">
+                      <button type="submit" class="btn btn-primary">
+                        <i class="ti ti-device-floppy me-1"></i> Save Changes
+                      </button>
+                      <a href="" class="btn btn-light">Back to Dashboard</a>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-footer bg-light small text-muted">
+                  <i class="ti ti-shield-lock me-1"></i> Your profile is private and only visible to your assigned support team.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="py-6 px-6 text-center">
+            <p class="mb-0 fs-4">JusticeConnect • You’re in control of your information</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Main -->
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/js/sidebarmenu.js"></script>
+  <script src="./assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+
+</body>
+</html>
