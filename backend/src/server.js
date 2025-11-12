@@ -76,10 +76,16 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/cases', casesRoutes);
 app.use('/api', apiRoutes);
+
 const adminRoutes = require('./routes/admin.routes');
 app.use('/api/admin', adminRoutes); 
+
 const adminCasesRoutes = require('./routes/admin.cases');
 app.use('/api/admin', adminCasesRoutes);
+
+// NEW: mount the System Snapshot API
+const adminSnapshotRoutes = require('./routes/admin.snapshot'); // NEW
+app.use('/api/admin', adminSnapshotRoutes);                     // NEW
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`JusticeConnect running at http://localhost:${port}`));

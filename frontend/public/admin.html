@@ -218,78 +218,88 @@
             </div>
 
             <!-- RIGHT SIDE CARD: System Snapshot -->
-            <div class="col-lg-4">
-              <div class="card overflow-hidden">
-                <div class="card-body pb-0">
-                  <div class="d-flex align-items-start">
-                    <div>
-                      <h4 class="card-title">System Snapshot</h4>
-                      <p class="card-subtitle">Live status</p>
-                    </div>
-                    <div class="ms-auto">
-                      <div class="dropdown">
-                        <a href="#" class="text-muted" id="year1-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="ti ti-dots fs-7"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="year1-dropdown">
-                          <li><a class="dropdown-item" href="#">View Logs</a></li>
-                          <li><a class="dropdown-item" href="#">Download Report</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+<div class="col-lg-4">
+  <div class="card overflow-hidden" id="systemSnapshotCard">
+    <div class="card-body pb-0">
+      <div class="d-flex align-items-start">
+        <div>
+          <h4 class="card-title">System Snapshot</h4>
+          <p class="card-subtitle">Live status</p>
+        </div>
+        <div class="ms-auto">
+          <div class="dropdown">
+            <a href="#" class="text-muted" id="year1-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="ti ti-dots fs-7"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="year1-dropdown">
+              <li><button class="dropdown-item" type="button" id="ss-refresh">Refresh now</button></li>
+              <li><a class="dropdown-item" href="#">View Logs</a></li>
+              <li><a class="dropdown-item" href="#">Download Report</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-                  <!-- item 1 -->
-                  <div class="mt-4 pb-3 d-flex align-items-center">
-                    <span class="btn btn-primary rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-alert-triangle fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">High Priority Cases</h5>
-                      <span class="text-muted fs-3">Needing assignment now</span>
-                    </div>
-                    <div class="ms-auto"><span class="badge bg-secondary-subtle text-muted">4</span></div>
-                  </div>
+      <!-- item 1 -->
+      <div class="mt-4 pb-3 d-flex align-items-center">
+        <span class="btn btn-primary rounded-circle round-48 hstack justify-content-center">
+          <i class="ti ti-alert-triangle fs-6"></i>
+        </span>
+        <div class="ms-3">
+          <h5 class="mb-0 fw-bolder fs-4">High Priority Cases</h5>
+          <span class="text-muted fs-3">Needing assignment now</span>
+        </div>
+        <div class="ms-auto">
+          <span class="badge bg-secondary-subtle text-muted" id="ss-highPriorityCount">—</span>
+        </div>
+      </div>
 
-                  <!-- item 2 -->
-                  <div class="py-3 d-flex align-items-center">
-                    <span class="btn btn-warning rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-user-check fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Lawyers Available</h5>
-                      <span class="text-muted fs-3">Marked "accepting cases"</span>
-                    </div>
-                    <div class="ms-auto"><span class="badge bg-secondary-subtle text-muted">12</span></div>
-                  </div>
+      <!-- item 2 -->
+      <div class="py-3 d-flex align-items-center">
+        <span class="btn btn-warning rounded-circle round-48 hstack justify-content-center">
+          <i class="ti ti-user-check fs-6"></i>
+        </span>
+        <div class="ms-3">
+          <h5 class="mb-0 fw-bolder fs-4">Lawyers Available</h5>
+          <span class="text-muted fs-3">Marked "accepting cases"</span>
+        </div>
+        <div class="ms-auto">
+          <span class="badge bg-secondary-subtle text-muted" id="ss-lawyersAvailableCount">—</span>
+        </div>
+      </div>
 
-                  <!-- item 3 -->
-                  <div class="py-3 d-flex align-items-center">
-                    <span class="btn btn-success rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-heart-handshake fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Survivors Supported</h5>
-                      <span class="text-muted fs-3">This week</span>
-                    </div>
-                    <div class="ms-auto"><span class="badge bg-secondary-subtle text-muted">27</span></div>
-                  </div>
+      <!-- item 3 -->
+      <div class="py-3 d-flex align-items-center">
+        <span class="btn btn-success rounded-circle round-48 hstack justify-content-center">
+          <i class="ti ti-heart-handshake fs-6"></i>
+        </span>
+        <div class="ms-3">
+          <h5 class="mb-0 fw-bolder fs-4">Survivors Supported</h5>
+          <span class="text-muted fs-3">This week</span>
+        </div>
+        <div class="ms-auto">
+          <span class="badge bg-secondary-subtle text-muted" id="ss-survivorsSupportedCount">—</span>
+        </div>
+      </div>
 
-                  <!-- item 4 -->
-                  <div class="pt-3 mb-7 d-flex align-items-center">
-                    <span class="btn btn-secondary rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-shield-lock fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Access / Security</h5>
-                      <span class="text-muted fs-3">No policy violations</span>
-                    </div>
-                    <div class="ms-auto"><span class="badge bg-secondary-subtle text-muted">OK</span></div>
-                  </div>
+      <!-- item 4 -->
+      <div class="pt-3 mb-7 d-flex align-items-center">
+        <span class="btn btn-secondary rounded-circle round-48 hstack justify-content-center">
+          <i class="ti ti-shield-lock fs-6"></i>
+        </span>
+        <div class="ms-3">
+          <h5 class="mb-0 fw-bolder fs-4">Access / Security</h5>
+          <span class="text-muted fs-3" id="ss-securitySubtitle">—</span>
+        </div>
+        <div class="ms-auto">
+          <span class="badge bg-secondary-subtle text-muted" id="ss-securityBadge">—</span>
+        </div>
+      </div>
 
-                </div>
-              </div>
-            </div>
+    </div>
+  </div>
+</div>
+
 
             <!-- TABLE: Assignment Queue -->
             <div class="col-12 anchor-target" id="assign-case">
