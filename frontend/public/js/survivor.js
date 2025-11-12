@@ -1,7 +1,7 @@
 // frontend/public/js/survivor.js
 (function () {
   // Require logged-in survivor
-  if (typeof guard === 'function') guard(['survivor']);
+  //if (typeof guard === 'function') guard(['survivor']);
 
   // ====== Constants / Elements ======
   const form = document.getElementById('caseRequestForm');

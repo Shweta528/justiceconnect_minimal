@@ -14,7 +14,7 @@ const connectDB   = require('./config/db');
 const authRoutes  = require('./routes/auth');
 const apiRoutes   = require('./routes/api');
 const casesRoutes = require('./routes/cases.routes');
-
+const adminMetricsRoutes = require('./routes/admin.metrics.routes');
 const app = express();
 
 // Connect DB
@@ -82,6 +82,7 @@ app.use('/api/admin', adminRoutes);
 
 const adminCasesRoutes = require('./routes/admin.cases');
 app.use('/api/admin', adminCasesRoutes);
+app.use('/api/admin', adminMetricsRoutes);
 
 // NEW: mount the System Snapshot API
 const adminSnapshotRoutes = require('./routes/admin.snapshot'); // NEW
