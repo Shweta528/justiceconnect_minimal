@@ -9,6 +9,7 @@
   <!-- Your theme bundle (assumes Bootstrap utilities/components inside) -->
   <link rel="stylesheet" href="./css/styles.min.css" />
   <link rel="stylesheet" href="css/login.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <style>
     /* tiny helpers only for previews */
     .required-asterisk::after { content: " *"; color: #dc3545; }
@@ -184,11 +185,20 @@
 
                       <tbody id="my-cases-body">
                         <tr>
-                          <td colspan="6" class="text-center text-muted py-3">
-                            Loading your cases…
+                          <td id="cd-caseId">—</td>
+                          <td id="cd-status">—</td>
+                          <td id="cd-lawyer">—</td>
+                          <td id="cd-next">—</td>
+                          <td id="cd-desc">—</td>
+                          <td id="cd-updated">—</td>
+                          <td>
+                            <a class="btn btn-sm btn-primary" id="cd-view" href="#">View</a>
+                            <a class="btn btn-sm btn-warning" id="cd-edit" href="#">Edit</a>
+                            <button class="btn btn-sm btn-danger" id="cd-delete">Delete</button>
                           </td>
                         </tr>
                       </tbody>
+
                     </table>
                   </div>
                 </div>
