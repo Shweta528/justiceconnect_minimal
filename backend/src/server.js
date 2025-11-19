@@ -22,16 +22,16 @@ const adminSnapshotRoutes = require('./routes/admin.snapshot');
 
 const app = express();
 
-// Connect database
+// Connect DB
 connectDB();
 
-// 🔥 FIXED CORS — MUST specify the real origin
+// CORS
 app.use(cors({
   origin: "http://localhost:4000",
   credentials: true
 }));
 
-// 🔥 FIXED HELMET — allow scripts, styles & CDN
+// Helmet
 app.use(
   helmet({
     crossOriginEmbedderPolicy: false,
@@ -66,7 +66,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// 🔥 FIXED SESSION
+// Sessions
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "devsecret",
@@ -77,18 +77,24 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false, // must be false on localhost
+      secure: false,
       sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 4, // 4 hours
-    },
+      maxAge: 1000 * 60 * 60 * 4,
+    }
   })
 );
 
+// ⭐⭐⭐ CRITICAL FIX (ADD THIS) ⭐⭐⭐
+app.use((req, res, next) => {
+  if (req.session?.user?.id) {
+    req.session.userId = req.session.user.id;  // <-- required by all protected routes
+  }
+  next();
+});
+
 // normalize req.user
 app.use((req, res, next) => {
-  if (req.session.user) {
-    req.user = { ...req.session.user };
-  }
+  if (req.session.user) req.user = { ...req.session.user };
   next();
 });
 

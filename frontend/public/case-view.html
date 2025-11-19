@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>Case Details</title>
+  <link rel="stylesheet" href="./css/styles.min.css">
+</head>
+
+<body class="p-4">
+
+  <h3 class="mb-4">Case Details</h3>
+
+  <div id="errorBox" class="alert alert-danger d-none"></div>
+
+  <div class="card p-4 shadow-sm">
+    <h5>Case Information</h5>
+    <p><strong>Case ID:</strong> <span id="c-caseId"></span></p>
+    <p><strong>Status:</strong> <span id="c-status"></span></p>
+    <p><strong>Created:</strong> <span id="c-created"></span></p>
+    <p><strong>Updated:</strong> <span id="c-updated"></span></p>
+
+    <hr>
+
+    <h5>Survivor Information</h5>
+    <p><strong>Preferred Name:</strong> <span id="c-survivorName"></span></p>
+
+    <hr>
+
+    <h5>Contact Preferences</h5>
+    <p><strong>Contact Method:</strong> <span id="c-contactMethod"></span></p>
+    <p><strong>Contact Value:</strong> <span id="c-contactValue"></span></p>
+    <p><strong>Safe to Contact:</strong> <span id="c-safe"></span></p>
+    <p><strong>Best Contact Time:</strong> <span id="c-contactTimes"></span></p>
+
+    <hr>
+
+    <h5>Location</h5>
+    <p><strong>Province:</strong> <span id="c-province"></span></p>
+    <p><strong>City:</strong> <span id="c-city"></span></p>
+    <p><strong>Language:</strong> <span id="c-language"></span></p>
+
+    <hr>
+
+    <h5>Case Details</h5>
+    <p><strong>Issue Category:</strong> <span id="c-issue"></span></p>
+    <p><strong>Desired Outcome:</strong> <span id="c-outcome"></span></p>
+    <p><strong>Situation:</strong> <span id="c-situation"></span></p>
+    <p><strong>Urgency:</strong> <span id="c-urgency"></span></p>
+    <p><strong>Safety Concern:</strong> <span id="c-safety"></span></p>
+
+    <hr>
+
+    <h5>Additional Information</h5>
+    <p><strong>Access Needs:</strong> <span id="c-access"></span></p>
+    <p><strong>Confidential Notes:</strong> <span id="c-notes"></span></p>
+
+  </div>
+
+  <script src="./js/case-view.js"></script>
+</body>
+</html>
