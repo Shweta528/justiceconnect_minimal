@@ -6,24 +6,29 @@
 
   async function fetchSnapshot() {
     try {
-      const res = await fetch('/api/admin/metrics/snapshot', { credentials: 'include' });
+      const res = await fetch('/api/admin/system-snapshot', {
+        credentials: 'include'
+      });
+
       if (!res.ok) throw new Error('Failed to fetch snapshot');
+
       const data = await res.json();
 
-      if (elHigh) elHigh.textContent = (data.highPriorityCases ?? '0').toString();
-      if (elLaw)  elLaw.textContent  = (data.lawyersAvailable ?? '0').toString();
-      if (elSup)  elSup.textContent  = (data.survivorsSupported ?? '0').toString();
-      if (elSec)  elSec.textContent  = data.security || 'OK';
-    } catch (e) {
-      console.warn('snapshot load error:', e);
-      if (elHigh) elHigh.textContent = '—';
-      if (elLaw)  elLaw.textContent  = '—';
-      if (elSup)  elSup.textContent  = '—';
-      if (elSec)  elSec.textContent  = '—';
+      // Update UI
+      elHigh.textContent = data.highPriority ?? '0';
+      elLaw.textContent = data.lawyersAvailable ?? '0';
+      elSup.textContent = data.survivorsSupported ?? '0';
+      elSec.textContent = data.security ?? 'OK';
+
+    } catch (err) {
+      console.warn('snapshot load error:', err);
+      elHigh.textContent = '—';
+      elLaw.textContent = '—';
+      elSup.textContent = '—';
+      elSec.textContent = '—';
     }
   }
 
-  // initial load + light polling (every 30s)
   fetchSnapshot();
   setInterval(fetchSnapshot, 30000);
 })();

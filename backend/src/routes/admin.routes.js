@@ -1,74 +1,64 @@
+// backend/src/routes/admin.routes.js
 const express = require('express');
 const router = express.Router();
 const { requireAuth, requireRole } = require('../middleware/auth');
 const CaseRequest = require('../models/CaseRequest');
+const Lawyer = require("../models/Lawyer");
 
 function priorityBadge(urgency) {
   const u = String(urgency || '').toLowerCase();
-  if (u === 'high')   return { label: 'High', class: 'bg-danger' };
-  if (u === 'medium') return { label: 'Medium', class: 'bg-warning' };
-  return { label: 'Low', class: 'text-bg-primary' };
+  if (u === 'high') return { label: 'High', class: 'bg-danger' };
+  if (u === 'medium') return { label: 'Medium', class: 'bg-warning text-dark' };
+  return { label: 'Low', class: 'bg-secondary' };
 }
 
-function makeCaseInsensitiveRegexes(list) {
-  return (list || []).map(s => {
-    const esc = String(s).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(`^${esc}$`, 'i');
-  });
-}
-
+// ⭐ ONLY ONE ROUTE — KEEP THIS ONE
 router.get('/cases/queue', requireAuth, requireRole('admin'), async (req, res) => {
   try {
-    // default statuses to show in queue
-    const defaultStatuses = ['submitted', 'in review', 'assigned'];
+    const statuses = ['Submitted', 'In Review', 'Assigned'];
 
-    let statuses = req.query.status
-      ? req.query.status.split(',').map(s => s.trim()).filter(Boolean)
-      : defaultStatuses;
+    const cases = await CaseRequest.find({ status: { $in: statuses } })
+      .sort({ createdAt: -1 })
+      .select(
+        'caseId status urgency province issueCategory preferredName safetyConcern ' +
+        'assignedLawyer assignedLawyerName updatedAt'
+      )
+      .lean();
 
-    if (statuses.length === 1 && statuses[0].toLowerCase() === 'all') {
-      statuses = ['submitted', 'in review', 'assigned', 'waiting', 'pending', 'closed'];
-    }
-
-    const limit  = Math.min(parseInt(req.query.limit || '20', 10), 100);
-    const offset = Math.max(parseInt(req.query.offset || '0', 10), 0);
-
-    // case-insensitive filter for status values saved with different casing
-    const statusRegexes = makeCaseInsensitiveRegexes(statuses);
-    const query = statusRegexes.length ? { status: { $in: statusRegexes } } : {};
-
-    const [items, total] = await Promise.all([
-      CaseRequest.find(query)
-        .sort({ createdAt: -1 })
-        .skip(offset)
-        .limit(limit)
-        // ⬅ include preferredName and safetyConcern so we can decide what to display
-        .select('caseId status urgency province issueCategory preferredName safetyConcern updatedAt')
-        .lean(),
-      CaseRequest.countDocuments(query),
-    ]);
-
-    const mapped = items.map(i => {
-      // If safetyConcern is true, default to anonymized label
-      const canShowName = i.preferredName && !i.safetyConcern;
-      const survivorLabel = canShowName ? i.preferredName : 'Anonymous Survivor';
-      const survivorSub   = `${i.province || '—'} • ${i.issueCategory || '—'}`;
-      const pr            = priorityBadge(i.urgency);
+    const mapped = cases.map(doc => {
+      const survivorLabel =
+        doc.preferredName && !doc.safetyConcern
+          ? doc.preferredName
+          : "Anonymous Survivor";
 
       return {
-        caseId: i.caseId || '—',
-        status: i.status || 'Submitted',
-        urgency: pr, // {label,class} for your badge renderer
+        caseId: doc.caseId,
         survivorLabel,
-        survivorSub,
-        updatedAt: i.updatedAt,
+        survivorSub: `${doc.province || '—'} • ${doc.issueCategory || '—'}`,
+        urgency: priorityBadge(doc.urgency),
+        rowStatus: doc.status,
+        
+        // ⭐ REQUIRED FIELDS FOR BUTTON LOGIC ⭐
+        assignedLawyer: doc.assignedLawyer || null,
+        assignedLawyerName: doc.assignedLawyerName || ""
       };
     });
 
-    res.json({ total, items: mapped, limit, offset });
+    return res.json({ items: mapped });
+
   } catch (err) {
-    console.warn('Admin queue error:', err);
-    res.status(500).json({ message: 'Failed to load assignment queue' });
+    console.error("QUEUE ERROR:", err);
+    res.status(500).json({ message: "Error loading queue" });
+  }
+});
+
+// SINGLE LAWYERS ROUTE
+router.get("/lawyers", requireAuth, requireRole('admin'), async (req, res) => {
+  try {
+    const lawyers = await Lawyer.find().lean();
+    res.json({ success: true, data: lawyers });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to load lawyers" });
   }
 });
 

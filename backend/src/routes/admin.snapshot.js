@@ -3,57 +3,40 @@ const express = require('express');
 const router = express.Router();
 
 const CaseRequest = require('../models/CaseRequest');
+const Lawyer = require('../models/Lawyer');
 const { requireAuth, requireRole } = require('../middleware/auth');
-
-// OPTIONAL: if you have a Lawyer or User model to count availability
-let LawyerOrUser = null;
-try {
-  // Prefer a Lawyer model; otherwise fall back to User with role=lawyer
-  LawyerOrUser = require('../models/Lawyer');
-} catch (_) {
-  try { LawyerOrUser = require('../models/User'); } catch (_) {}
-}
 
 router.get('/system-snapshot', requireAuth, requireRole('admin'), async (req, res) => {
   try {
-    // High priority cases needing assignment now
+    //-- 1️⃣ HIGH PRIORITY CASES (ALL)
     const highPriority = await CaseRequest.countDocuments({
-      urgency: { $in: [/^High$/i] },
-      status:  { $in: [/^Submitted$/i, /^In Review$/i] }
+      urgency: "High"
     });
 
-    // Lawyers available (best effort)
-    let lawyersAvailable = 0;
-    if (LawyerOrUser) {
-      // If using User model: expect { role:'lawyer', acceptingCases:true }
-      // If using Lawyer model: expect { acceptingCases:true }
-      const roleFilter =
-        (LawyerOrUser.modelName === 'User')
-          ? { role: { $in: ['lawyer', 'Lawyer'] } }
-          : {};
-      lawyersAvailable = await LawyerOrUser.countDocuments({
-        ...roleFilter,
-        $or: [
-          { acceptingCases: true },
-          { status: { $in: [/^Available$/i, /^Accepting$/i] } }
-        ]
-      });
-    }
+    //-- 2️⃣ TOTAL LAWYERS (not availability-based)
+    const lawyersAvailable = await Lawyer.countDocuments({});
 
-    // Survivors supported this week (proxy: cases updated in last 7 days)
+    //-- 3️⃣ SURVIVORS SUPPORTED THIS WEEK (Assigned cases updated in last 7 days)
     const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
     const survivorsSupportedWeek = await CaseRequest.countDocuments({
-      updatedAt: { $gte: since }
+  status: "Assigned",
+  updatedAt: { $gte: since }
+});
+
+    //-- 4️⃣ BASIC SECURITY INDICATOR
+    const security = "OK";
+
+    res.json({
+      highPriority,
+      lawyersAvailable,
+      survivorsSupported: survivorsSupportedWeek,
+      security
     });
 
-    // Simple access/security status (0 alerts -> OK)
-    // Replace with your own checks (e.g., AuditLog collection)
-    const security = { statusText: 'No policy violations', level: 'ok' };
-
-    res.json({ highPriority, lawyersAvailable, survivorsSupportedWeek, security });
   } catch (err) {
-    console.error('system-snapshot error:', err);
-    res.status(500).json({ message: 'Failed to load snapshot' });
+    console.error("system-snapshot error:", err);
+    res.status(500).json({ message: "Failed to load snapshot" });
   }
 });
 

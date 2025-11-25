@@ -1,11 +1,25 @@
+// backend/src/routes/auth.js
 const router = require('express').Router();
 const User = require('../models/User');
+const Lawyer = require('../models/Lawyer');
 const mailer = require('../config/mail');
 
-// Register
+// REGISTER
 router.post('/register', async (req, res) => {
   try {
-    const { fname, lname, phone, email, password, role, expertise = [], licenseNumber } = req.body;
+    const {
+      fname,
+      lname,
+      phone,
+      email,
+      password,
+      role,
+      expertise = [],
+      licenseNumber,
+      province,
+      specialization,
+      yearsExperience = 0
+    } = req.body;
 
     if (!email || !password || !role) {
       return res.status(400).json({ message: 'Missing fields' });
@@ -16,8 +30,8 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Email already used' });
     }
 
-    // Create the new user
-    const u = new User({
+    // ---------- Create User ----------
+    const user = new User({
       fname,
       lname,
       phone,
@@ -25,69 +39,73 @@ router.post('/register', async (req, res) => {
       role,
       expertise,
       licenseNumber,
-      status: (role === 'admin' || role === 'lawyer') ? 'pending' : 'approved'
+      status: (role === 'lawyer') ? 'pending' : 'approved'
     });
 
-    await u.setPassword(password);
-    await u.save();
+    await user.setPassword(password);
+    await user.save();
 
-    // If role requires approval, send email
-    if (role === 'admin' || role === 'lawyer') {
-      try {
-        await mailer.sendMail({
-          from: process.env.EMAIL_USER,
-          to: process.env.ADMIN_NOTIFY, // comma-separated list if multiple
-          subject: `Approval Required: New ${role} Registration`,
-          text: `A new ${role} has registered and requires approval:\n
-Name: ${fname} ${lname}
-Email: ${email}
-Phone: ${phone}
-Expertise: ${expertise.join(', ')}`
-        });
-      } catch (mailErr) {
-        console.error('Email sending failed:', mailErr);
-        // still allow registration to succeed
-      }
-    }
+    // ---------- If Lawyer, create Lawyer table entry ----------
+    if (user.role === "lawyer") {
+    await Lawyer.create({
+        fullName: `${fname} ${lname}`.trim(),
+        email: user.email,
+        phone: user.phone || "",
+        
+        // REQUIRED FIELDS (use placeholder if missing)
+        specialization: Array.isArray(expertise)
+            ? expertise.join(", ")
+            : expertise || "General Law",
+        province: province || "Unknown",
+        licenseProvince: req.body.licenseProvince || province || "Unknown",
+        licenseNumber: licenseNumber || "N/A",
+        yearsExperience: yearsExperience || 0,
 
-    // Single response back to client
+        isActive: true,
+        acceptingCases: false,
+        status: "Active"
+    });
+}
+
+
     return res.json({
-      message: (role === 'admin' || role === 'lawyer')
-        ? 'Registered successfully. Verification pending from super admin.'
-        : 'Registered successfully. You can now log in.'
+      message: (role === 'lawyer')
+        ? "Registered. Verification pending."
+        : "Registered successfully."
     });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error during registration' });
+    console.error("REGISTER ERROR:", err);
+    return res.status(500).json({ message: "Server error during registration" });
   }
 });
 
-
-// Login
+// LOGIN
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const u = await User.findOne({ email });
-  if(!u || !(await u.validatePassword(password))) {
-    return res.status(400).json({message:'Invalid credentials'});
+  if (!u || !(await u.validatePassword(password))) {
+    return res.status(400).json({ message: 'Invalid credentials' });
   }
+
   req.session.user = { id: u._id.toString(), role: u.role, email: u.email };
+
   res.json({
-      user: {
-        id: u._id.toString(),
-        role: u.role,
-        email: u.email
-      }
-    });
+    user: {
+      id: u._id.toString(),
+      role: u.role,
+      email: u.email
+    }
+  });
 });
 
-// Logout
-router.post('/logout', (req,res)=>{
-  req.session.destroy(()=> res.json({message:'Logged out'}));
+// LOGOUT
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => res.json({ message: 'Logged out' }));
 });
 
-// Who am I
-router.get('/me', (req,res)=>{
+// WHO AM I
+router.get('/me', (req, res) => {
   res.json({ user: req.session.user || null });
 });
 

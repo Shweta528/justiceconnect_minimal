@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const CaseRequest = require('../models/CaseRequest');
+const Lawyer = require('../models/Lawyer');
 const { requireAuth, requireRole } = require('../middleware/auth');
 
 // GET /api/admin/cases/:caseId  -> load one case by public caseId
@@ -75,30 +76,54 @@ router.get('/cases/:caseId/attachments/:filename', requireAuth, requireRole('adm
   }
 });
 
-// POST /api/admin/cases/:caseId/assign  -> set lawyer/priority/status/notes
+// POST /api/admin/cases/:caseId/assign
 router.post('/cases/:caseId/assign', requireAuth, requireRole('admin'), async (req, res) => {
   try {
     const { lawyer, priority, status, notes } = req.body;
 
-    const update = {
-      assignedLawyer: lawyer || '',
-      urgency: priority || 'Medium',  // keep using urgency as UI priority
-      status: status || 'In Review',
-      adminNotes: notes || ''
-    };
+    // 1️⃣ Load lawyer document
+    const lawyerDoc = await Lawyer.findById(lawyer);
+    if (!lawyerDoc) return res.status(404).json({ message: "Lawyer not found" });
 
-    const doc = await CaseRequest.findOneAndUpdate(
+    // 2️⃣ Update the case
+    const caseDoc = await CaseRequest.findOneAndUpdate(
       { caseId: req.params.caseId },
-      { $set: update },
+      {
+        $set: {
+          assignedLawyer: lawyerDoc._id,
+          assignedLawyerName: lawyerDoc.fullName,
+          priority: priority || "Medium",
+          status: status || "Assigned",
+          internalNotes: notes || ""
+        }
+      },
       { new: true }
-    ).lean();
+    );
 
-    if (!doc) return res.status(404).json({ message: 'Case not found' });
-    res.json({ message: 'Assignment saved', caseId: doc.caseId });
+    if (!caseDoc) return res.status(404).json({ message: "Case not found" });
+
+    // 3️⃣ Remove assignedCases logic (your Lawyer model does not have this)
+    // 🚫 REMOVED:
+    // lawyerDoc.assignedCases.push(caseDoc._id)
+
+    return res.json({
+      success: true,
+      message: "Case assigned successfully",
+      caseId: caseDoc.caseId,
+      assignedLawyerName: lawyerDoc.fullName
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error saving assignment' });
+    console.error("ASSIGN ERROR:", err);
+    return res.status(500).json({ message: "Error saving assignment" });
   }
 });
+
+
+
+// GET /api/admin/cases/queue  -> list cases for the assignment queue
+
+
+
 
 module.exports = router;

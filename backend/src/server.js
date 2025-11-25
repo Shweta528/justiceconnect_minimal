@@ -16,7 +16,7 @@ const apiRoutes = require('./routes/api');
 const casesRoutes = require('./routes/cases.routes');
 const adminMetricsRoutes = require('./routes/admin.metrics.routes');
 const profileRoutes = require('./routes/profile.routes');
-const adminRoutes = require('./routes/admin.routes');
+const adminRoutes = require('./routes/admin.routes');   // ← ONLY ONCE
 const adminCasesRoutes = require('./routes/admin.cases');
 const adminSnapshotRoutes = require('./routes/admin.snapshot');
 
@@ -84,11 +84,9 @@ app.use(
   })
 );
 
-// ⭐⭐⭐ CRITICAL FIX (ADD THIS) ⭐⭐⭐
+// Required for admin auth
 app.use((req, res, next) => {
-  if (req.session?.user?.id) {
-    req.session.userId = req.session.user.id;  // <-- required by all protected routes
-  }
+  if (req.session?.user?.id) req.session.userId = req.session.user.id;
   next();
 });
 
@@ -102,7 +100,7 @@ app.use((req, res, next) => {
 app.use('/', express.static(path.join(__dirname, '../../frontend/public')));
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-// Routes
+// API ROUTES (CORRECT)
 app.use('/api/auth', authRoutes);
 app.use('/api/cases', casesRoutes);
 app.use('/api/admin', adminRoutes);
